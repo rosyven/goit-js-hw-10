@@ -25,6 +25,7 @@ function elementsVisibility(isLoading) {
 function handleBreedSelectChange(event) {
   const selectedBreedId = event.target.value;
   elementsVisibility(true);
+  clearCatInfo();
 
   fetchCatByBreed(selectedBreedId)
     .then(catData => {
@@ -32,14 +33,14 @@ function handleBreedSelectChange(event) {
       const catDescription = catData.breeds[0].description;
       const catTemperament = catData.breeds[0].temperament;
       const catImageURL = catData.url;
-      const width = catData.width;
-      const height = catData.height;
+      const width = 900;
+      // const height = catData.height;
 
       catInfo.innerHTML = `
         <h2>${catName}</h2>
         <p>${catDescription}</p>
         <p>Temperament: ${catTemperament}</p>
-        <img src="${catImageURL}" alt="Cat Image" width="${width}" height="${height}">
+        <img src="${catImageURL}" alt="Cat Image" width="${width}">
       `;
       elementsVisibility(false);
     })
@@ -69,3 +70,7 @@ window.addEventListener('load', () => {
       Notiflix.Notify.failure('Oops! Something went wrong. Try again later.');
     });
 });
+
+function clearCatInfo() {
+  catInfo.innerHTML = '';
+}
